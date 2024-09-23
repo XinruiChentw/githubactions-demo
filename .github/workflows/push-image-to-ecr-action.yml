@@ -36,5 +36,5 @@ jobs:
       - name: send-failure-message
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        if: ${{ failure() }}
+        if: ${{ failure() || cancelled() }}
         run: ./auto/send_message
