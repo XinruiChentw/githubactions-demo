@@ -23,7 +23,7 @@ message_to_send() {
 EOF
 }
 
-export WEBHOOK_URL="https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=2b3bf81e-e336-4755-8dc4-4b5235ddd5d0"
+export WEBHOOK_URL
 curl -X POST \
   -H "Content-Type: application/json" \
   -d "$(message_to_send)" \
