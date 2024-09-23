@@ -33,3 +33,8 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
+      - name: send-failure-message
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        if: ${{ failure() }}
+        run: ./auto/send_message
