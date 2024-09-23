@@ -12,7 +12,7 @@ permissions:
 jobs:
   ECR-task:
     name: Build image and push to ecr
-    runs-on: ubuntu-latest
+    runs-on: macOS
     steps:
       - uses: actions/checkout@v3
 
