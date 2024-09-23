@@ -24,6 +24,7 @@ message_to_send() {
 EOF
 }
 
+export WEBHOOK_URL
 curl -X POST \
   -H "Content-Type: application/json" \
   -d "$(message_to_send)" \
