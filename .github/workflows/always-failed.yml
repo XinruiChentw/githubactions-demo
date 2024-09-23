@@ -19,7 +19,7 @@ jobs:
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: 'ap-east-1'
-          role-to-assume: 'arn:aws:iam::494526681395:role/xr-github-test'
+          role-to-assume: 'arn:aws:iam::494526681395:role/xr-github'
 
       - id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
