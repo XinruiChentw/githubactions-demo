@@ -1,9 +1,10 @@
-name: push images to ECR
+name: Always failed
 
 on:
   push:
     branches:
       - 'main'
+  workflow_dispatch:
 
 permissions:
   id-token: write
