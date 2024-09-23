@@ -16,8 +16,7 @@ message_to_send() {
          >commit id: <font color=\"comment\">[$SHORT_SHA](https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA)</font>
          >repository: <font color=\"comment\">$GITHUB_REPOSITORY</font>
          >branch: <font color=\"comment\">$GITHUB_REF_NAME</font>
-         >person: <font color=\"comment\">$GITHUB_ACTOR</font>
-         >message: <font color=\"comment\">$MESSAGE</font>\n
+         >person: <font color=\"comment\">$GITHUB_ACTOR</font>\n
          \nYou can check it here [failed pipeline](https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)"
     }
 }
