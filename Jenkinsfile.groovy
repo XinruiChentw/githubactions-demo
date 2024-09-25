@@ -5,7 +5,7 @@ pipeline {
         AWS_REGION = 'ap-east-1'
         ROLE_ARN = 'arn:aws:iam::494526681395:role/xr-github-test'
         REPOSITORY = 'xinrui/demo'
-        IMAGE_TAG = "${env.BUILD_ID}"
+        IMAGE_TAG = "jenkins-${env.BUILD_ID}"
         WEBHOOK_URL = credentials('WEBHOOK_URL')
         AWS_ACCOUNT_ID = '494526681395'
     }
@@ -20,8 +20,9 @@ pipeline {
         stage('Login to ECR') {
             steps {
                 script {
-                    def login = sh(script: 'aws ecr get-login-password --region ${AWS_REGION} --profile tocpoweruser | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com', returnStdout: true).trim()
-                    echo "Login to ECR: ${login}"
+                    sh """
+                        aws ecr get-login-password --region ${AWS_REGION} --profile tocpoweruser | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com                  
+                    """
                 }
             }
         }
@@ -42,7 +43,15 @@ pipeline {
     post {
         failure {
             script {
-                sh './auto/send_message'
+                sh """
+                    curl -X POST -H 'Content-type: application/json' --data '
+                       {
+                            "msgtype": "text",
+                            "text": {
+                                "content": "Build failed"
+                            }
+                       }' --url ${WEBHOOK_URL}
+                """
             }
         }
     }
