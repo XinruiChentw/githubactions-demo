@@ -26,7 +26,7 @@ jobs:
                     "content": "This is a fake unit test"
                 }
            }' --url $WEBHOOK_URL
-  ECR-task:
+  build:
     name: Build image and push to ecr
     runs-on: macOS
     needs: [test]
@@ -58,6 +58,8 @@ jobs:
   deploy-task:
     name: fake deploy
     runs-on: ubuntu-latest
+    needs:
+      - build
     steps:
       - uses: actions/checkout@v3
       - name: send-deploy-message
