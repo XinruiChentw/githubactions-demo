@@ -10,9 +10,26 @@ permissions:
   contents: read
 
 jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: unit-test
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '
+           {
+                "msgtype": "text",
+                "text": {
+                    "content": "This is a fake unit test"
+                }
+           }' --url $WEBHOOK_URL
   ECR-task:
     name: Build image and push to ecr
     runs-on: macOS
+    needs: [test]
     steps:
       - uses: actions/checkout@v3
 
@@ -46,7 +63,6 @@ jobs:
       - name: send-deploy-message
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        if: ${{ success() }}
         run: |
           curl -X POST -H 'Content-type: application/json' --data '
            {
