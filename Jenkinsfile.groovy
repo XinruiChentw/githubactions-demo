@@ -16,7 +16,21 @@ pipeline {
                 checkout scm
             }
         }
-
+        stage('Test') {
+            steps {
+                script {
+                    sh """
+                    curl -X POST -H 'Content-type: application/json' --data '
+                       {
+                            "msgtype": "text",
+                            "text": {
+                                "content": "This is a fake unit test from jenkins"
+                            }
+                       }' --url ${WEBHOOK_URL}
+                    """
+                }
+            }
+        }
         stage('Login to ECR') {
             steps {
                 script {
